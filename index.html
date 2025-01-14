@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prx5y Website</title>
+    <style>
+        @font-face {
+            font-family: 'GohuFont';
+            src: url('gohufont-11.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        body {
+            background-color: black; /* Black background for contrast */
+            color: white; /* White text for readability */
+            font-family: 'GohuFont', monospace; /* Use GohuFont or fallback to monospace */
+            font-size: 11px; /* Set font size to 11px */
+            line-height: 1.2; /* Adjust line height for readability */
+            margin: 0;
+            padding: 0;
+            position: relative; /* Ensure positioning works for elements */
+            overflow: hidden; /* Prevent scrolling of the main body */
+        }
+
+        .vertical-line {
+            position: fixed;
+            top: 0;
+            left: 50%; /* Center the line horizontally */
+            width: 1px; /* Set the line's width */
+            height: 100%; /* Make the line span the full height */
+            background-color: white; /* White line for contrast against the black background */
+            transform: translateX(-50%); /* Adjust to ensure it's perfectly centered */
+        }
+
+        pre {
+            font-family: 'GohuFont', monospace;
+            font-size: 11px; /* Ensure preformatted text uses 11px font size */
+            line-height: 1.2; /* Adjust line height for preformatted text */
+            white-space: pre-wrap; /* Preserve whitespace */
+            word-wrap: break-word; /* Wrap long lines */
+            padding: 20px;
+            position: relative;
+            width: 48%; /* Take up space to the left of the line */
+        }
+
+        .scroll-box {
+            position: fixed;
+            top: 0;
+            right: 0; /* Align to the right of the viewport */
+            width: 49.5%; /* Take up space to the right of the line */
+            height: 100%; /* Full viewport height */
+            overflow-y: scroll; /* Enable vertical scrolling */
+            overflow-x: hidden; /* Prevent horizontal scrolling */
+            scrollbar-width: none; /* Hide scrollbar for Firefox */
+        }
+
+        .scroll-box::-webkit-scrollbar {
+            display: none; /* Hide scrollbar for WebKit browsers */
+        }
+
+        .scroll-box img {
+            width: 100%; /* Make images responsive */
+            margin-bottom: 10px; /* Add space between images */
+        }
+    </style>
+</head>
+<body>
+    <div class="vertical-line"></div>
+    <pre>
+██████╗ ██████╗ ██╗  ██╗███████╗██╗   ██╗                                                                  *       +
+██╔══██╗██╔══██╗╚██╗██╔╝██╔════╝╚██╗ ██╔╝                                                             '                 |
+██████╔╝██████╔╝ ╚███╔╝ ███████╗ ╚████╔╝                                                          ()    .-.,="``"=.   - o -
+██╔═══╝ ██╔══██╗ ██╔██╗ ╚════██║  ╚██╔╝                                                                 '=/_       \    |
+██║     ██║  ██║██╔╝ ██╗███████║   ██║                                                               *   |  '=._    |
+╚═╝     ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝   ╚═╝                                                                    \     `=./`,  
+Hi I am Lucy a self taught hacker/pentester with an interest in satellite hacking/tapping              .   '=.__.=' `='  
+CVE's i have discovered:                                                                         +                        +
+  - CVE-2024-46310                                                                                      O      *        '  
+im also an avid player of FiveM and i play on some of the most recogniseable 
+FiveM servers like Nopixel and PurpleRP
+
+<h2>Satellite hacking 101</h2>
+In this blog post, I am going to talk about how to download data from weather satellites while they are in orbit when they pass overhead :3. Before we start, we will need a few bits of hardware to receive the signals and get data from the sats using an RTL-SDR.
+Before we start, you must understand what an RTL-SDR is. RTL-SDR, or SDR for short, stands for Software Defined Radio. Software-defined radios, in short, let your computer receive radio signals normally ranging from 100 kHz to 1.75 GHz.
+A few bits of hardware I recommend are listed below:
+  <a href="https://www.nooelec.com/store/nesdr-smart-sdr.html">Nooelec NESDR SMArt v5 SDR</a>
+  <a href="https://www.nooelec.com/store/sawbird-plus-noaa-308.html">Nooelec SAWbird+ LNA</a>
+  <a href="https://www.sdrstore.eu/software-defined-radio/instruments/rtl-sdr/rtl-sdr-multipurpose-dipole-antenna-kit-en/">RTL-SDR Multipurpose Dipole Antenna Kit</a>
+Now that you understand what hardware we will be using, it's time to understand what satellites we will be receiving data from x3. The satellite I will be covering in this blog post is <a href="https://space.oscar.wmo.int/satellites/view/meteor_m_n2_3">METEOR M2-3</a>, a Russian-based weather satellite that is operated and run by the Russian space agency Roscosmos.
+METEOR M2-3 operates an LRPT (Low-rate Picture Transmission) antenna. This is what we will be downloading data from :D. The LRPT transmits a digital signal that I will show you how to demodulate and process the received S File data into nice images :3
+Next, we will need to know what software we will use to utilize our SDR. I recommend downloading <a href="https://leshamilton.co.uk/MeteorGIS.htm">this pack of software from Les Hamilton</a>. I recommend downloading "MeteorGIS Suite incorporating SDRSharp v 1910" as that is what I will be using in this post, and make sure to place these files in your main C:/ Drive, otherwise the configs won't work.
+List of Software Provided:
+  <a href="https://www.stoff.pl">Orbitron</a>
+  <a href="https://airspy.com/download/">SDR#</a>
+  <a href="https://zadig.akeo.ie">Zadig</a>
+  "AMIGOS", Provided by Les Hamilton
+  M2_LRPT_Decoder", Provided by Les Hamilton
+While you can download some of the above software individually, the pack I have provided comes with all the configs needed to instantly start receiving data, cutting out all the boring config work needed to get Orbitron and SDR# to work together correctly (more on this soon).
+Before we get into the main part we need to talk about how to setup ur hardware correctly, it is very very very important that you make sure you know what you are doing when it comes to setting up ur antenna if you dontcorrectly set up ur antenna you will get 0 data the angle length and a few more factors effect how much data you will receive
+the type of antenna we will be trying to make is called a V-dipol antenna using the diagram provided as a guid make sure ur antenna is setup as close to the diagram as posable, an extra tip is to make sure ur antennas angle is 120degreese from tip to tip the antennas should be 1 metere appart from eachother
+if you have decided to use the Low Noise Amplifier reccomended above make sure to plug it in as close to the RTL-SDR as you can trying to avoid cables between the two, this is to minimise infifewarance and to make sure you get the best signal possible
+Now that we have our software and hardware sorted, we can get into the fun part :3
+First things first, we will need to download the drivers so our RTL-SDR works with our PC. This is done with <a href="https://zadig.akeo.ie">Zadig</a>. Once installed, Zadig is very straightforward; just select the RTL-SDR device and click install drivers.
+Next, we will need to find out when the next pass of the satellite is. To do this, we will use <a href="https://www.stoff.pl">Orbitron</a>, which is provided in the pack above. when you load up orbitron you will be greated by a pop up asking to update passlists, this may happen automaticaly but it is key you make sure ur passlist is always uptodate, next you will see on the right a list of satilites make sure to select METEOR M2-3 then you will see 
+<iframe width="600" height="315" src="https://www.youtube.com/embed/gMwciWchH3Q?si=VU93-kxJTUI7YpYa" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </pre>
+    <div class="scroll-box">
+        <h3>images I took from space after hacking the Meteor M2-2N weather satilite</h3> <br>
+<hr>
+9th of September 2021 8:36PM UTC
+<hr>
+        <img src="https://raw.githubusercontent.com/PRX5Y/Meteor-M2-Data-and-Software-I-use/refs/heads/main/Images_M2/2021_09_09_LRPT_20-36-14.s_66.bmp" alt="Image 2">
+<hr>
+8th of September 2021 8:55PM UTC
+<hr>
+        <img src="https://raw.githubusercontent.com/PRX5Y/Meteor-M2-Data-and-Software-I-use/refs/heads/main/Images_M2/2021_09_08_LRPT_20-55-03.s_64.bmp" alt="Image 1">
+<hr>
+26th of July 2022 7:27PM UTC
+<hr>
+        <img src="./2022_07_26_LRPT_19-27-54.s_66.bmp" alt="Image 3">
+<hr>
+September 9th 2021 6:52PM UTC
+<hr>
+        <img src="./2021_09_09_LRPT_18-52-04.s_66.bmp" alt="Image 4">
+    </div>
+</body>
+</html>
+
+
+
