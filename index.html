@@ -32,6 +32,7 @@
             height: 100%; /* Make the line span the full height */
             background-color: white; /* White line for contrast against the black background */
             transform: translateX(-50%); /* Adjust to ensure it's perfectly centered */
+            z-index: 9999; /* Place the line above all other elements */
         }
 
         pre {
@@ -40,11 +41,25 @@
             line-height: 1.2; /* Adjust line height for preformatted text */
             white-space: pre-wrap; /* Preserve whitespace */
             word-wrap: break-word; /* Wrap long lines */
-            padding: 20px;
-            position: relative;
+            padding: 20px; /* Padding for text */
+            position: fixed; /* Stick to the viewport */
+            top: 0; /* Start at the top of the viewport */
+            left: 0; /* Align to the left of the viewport */
             width: 48%; /* Take up space to the left of the line */
+            height: 100%; /* Full height of the viewport */
+            overflow-y: scroll; /* Enable vertical scrolling */
+            overflow-x: scroll; /* Enable horizontal scrolling */
+            background-color: black; /* Ensure background consistency */
         }
 
+        /* Hide scrollbars for WebKit browsers */
+        pre::-webkit-scrollbar {
+            display: none;
+        }
+        /* Hide scrollbars for Firefox */
+        pre {
+            scrollbar-width: none; /* Hide scrollbar in Firefox */
+        }
         .scroll-box {
             position: fixed;
             top: 0;
